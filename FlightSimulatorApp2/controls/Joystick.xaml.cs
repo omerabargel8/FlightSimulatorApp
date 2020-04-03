@@ -24,6 +24,7 @@ namespace FlightSimulatorApp2.controls
         private void centerKnob_Completed(object sender, EventArgs e) { }
         public Joystick()
         {
+            //hh
             InitializeComponent();
         }
 
