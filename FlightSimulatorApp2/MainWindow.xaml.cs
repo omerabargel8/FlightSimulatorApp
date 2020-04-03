@@ -23,6 +23,8 @@ namespace FlightSimulatorApp2
         public MainWindow()
         {
             InitializeComponent();
+            
         }
+
     }
 }
