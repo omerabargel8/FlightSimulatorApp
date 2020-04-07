@@ -58,7 +58,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="controls\dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="controls\Joystick.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\Map.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -70,6 +78,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="controls\dashboard.xaml.cs">
+      <DependentUpon>dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\Map.xaml.cs">
+      <DependentUpon>Map.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="flightViewModel.cs" />
+    <Compile Include="mapViewModel.cs" />
     <Compile Include="myAppModel.cs" />
     <Compile Include="controls\Joystick.xaml.cs">
       <DependentUpon>Joystick.xaml</DependentUpon>

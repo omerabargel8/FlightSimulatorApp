@@ -13,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FlightSimulatorApp2
+namespace FlightSimulatorApp2.controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for dashboard.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class dashboard : UserControl
     {
-        flightViewModel vm;
-        public MainWindow()
+        public dashboard()
         {
             InitializeComponent();
-            myAppModel b = new myAppModel(new MyTelnetClient());
-            vm = new flightViewModel(b);
-            DataContext = vm;
-            b.connect("127.0.0.1", 5402);
-            b.start();
         }
     }
 }

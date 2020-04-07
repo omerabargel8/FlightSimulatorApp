@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="FlightSimulatorApp2.controls.dashboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FlightSimulatorApp2.controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Left" Height="39" Margin="14,35,0,0" TextWrapping="Wrap" Text="indicated-heading-deg:" FontSize="20" VerticalAlignment="Top" Width="233"/>
+        <Grid Grid.ColumnSpan="2" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Left" Height="39" Margin="10,38,0,0" TextWrapping="Wrap" Text="airspeed-indicator_indicated-speed-kt:" FontSize="20" VerticalAlignment="Top" Width="347" Grid.Row="3"/>
+            <TextBlock HorizontalAlignment="Left" Height="28" Margin="18,35,0,0" TextWrapping="Wrap" Text="gps_indicated-altitude-ft:" FontSize="20" VerticalAlignment="Top" Width="242" Grid.Column="1"/>
+            <TextBlock HorizontalAlignment="Left" Height="28" Margin="10,36.333,0,0" TextWrapping="Wrap" Text="attitude-indicator_internal-roll-deg:" FontSize="20" VerticalAlignment="Top" Width="320" Grid.Row="1" Grid.Column="1"/>
+            <TextBlock HorizontalAlignment="Left" Height="36" Margin="18,40.667,0,0" TextWrapping="Wrap" Text="attitude-indicator_internal-pitch-deg:" FontSize="20" VerticalAlignment="Top" Width="343" Grid.Row="2" Grid.Column="1"/>
+            <TextBlock HorizontalAlignment="Left" Height="39" Margin="20,38,0,0" TextWrapping="Wrap" Text="altimeter_indicated-altitude-ft:" FontSize="20" VerticalAlignment="Top" Width="287" Grid.Row="3" Grid.Column="1"/>
+        </Grid>
+        <Grid Grid.ColumnSpan="2" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Left" Height="38" Margin="10,38.667,0,0" TextWrapping="Wrap" Text="gps_indicated-ground-speed-kt:" FontSize="20" VerticalAlignment="Top" Width="288" Grid.Row="2"/>
+        </Grid>
+        <Grid Grid.ColumnSpan="2" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="101*"/>
+                <RowDefinition Height="105*" />
+                <RowDefinition Height="105*" />
+                <RowDefinition Height="105*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock HorizontalAlignment="Left" Height="36" Margin="10,37.667,0,0" TextWrapping="Wrap" Text="gps_indicated-vertical-speed:" FontSize="20" VerticalAlignment="Top" Width="269" Grid.Row="2"/>
+            <Label Content="{Binding VM_indicated_heading_deg}" HorizontalAlignment="Left" Height="45" Margin="285,26.5,0,0" VerticalAlignment="Top" Width="82" Grid.Row="1"/>
+            <Label Content="{Binding VM_gps_indicated_vertical_speed}" HorizontalAlignment="Left" Height="45" Margin="299.333,48.667,0,0" VerticalAlignment="Top" Width="82" Grid.Column="1" Grid.Row="4" FontSize ="15" />
+            <Label Content="{Binding VM_gps_indicated_ground_speed_kt}" HorizontalAlignment="Left" Height="45" Margin="307.333,57.334,0,0" VerticalAlignment="Top" Width="82" Grid.Column="1" Grid.Row="3" FontSize ="15"/>
+            <Label Content="{Binding VM_airspeed_indicator_indicated_speed_kt}" HorizontalAlignment="Left" Height="45" Margin="305.333,55.667,0,0" VerticalAlignment="Top" Width="82" Grid.Column="1" Grid.Row="2" FontSize ="15"/>
+            <Label Content="{Binding VM_gps_indicated_altitude_ft}" HorizontalAlignment="Left" Height="45" Margin="284.333,26.667,0,0" VerticalAlignment="Top" Width="82" Grid.Column="1" FontSize ="15" Grid.Row="1"/>
+            <Label Content="{Binding VM_attitude_indicator_internal_roll_deg}" HorizontalAlignment="Left" Height="45" Margin="298,66.667,0,-6.334" VerticalAlignment="Top" Width="82" Grid.Row="4" FontSize ="15"/>
+            <Label Content="{Binding VM_attitude_indicator_internal_pitch_deg}" HorizontalAlignment="Left" Height="45" Margin="302,37.334,0,0" VerticalAlignment="Top" Width="82" Grid.Row="3" FontSize ="15"/>
+            <Label Content="{Binding VM_altimeter_indicated_altitude_ft}" HorizontalAlignment="Left" Height="45" Margin="298,28.667,0,0" VerticalAlignment="Top" Width="82" Grid.Row="2" FontSize ="15"/>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -8,13 +8,8 @@
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>            <ColumnDefinition Width="2*" />            <ColumnDefinition Width="1*" />        </Grid.ColumnDefinitions>
 
-        <m:Map CredentialsProvider="sJNGetncVqg7DmYa2Itk~bqbL9-r1O-oKox3SdJDGxg~AjVHb9GyYILChhVFfuxX4IxYhlg9r5B3BgXnNXTljVWUeG_w2vfEx9emolf6bCjJ">
-            <m:Pushpin Location="32.016499,34.750278" Background="#FFE51024"/>
-        </m:Map>
-        
-        <Controls:Joystick Grid.Column ="1"></Controls:Joystick>
+    <Grid>
+        <Controls:dashboard Grid.Column="1"></Controls:dashboard>
     </Grid>
 </Window>

@@ -13,14 +13,16 @@ namespace FlightSimulatorApp2
         ITelnetClient telnetClient;
         volatile Boolean stop;
         public event PropertyChangedEventHandler PropertyChanged;
-        private double indicated_heading_deg;
-        private double gps_indicated_vertical_speed;
-        private double gps_indicated_ground_speed_kt;
-        private double airspeed_indicator_indicated_speed_kt;
-        private double gps_indicated_altitude_ft;
-        private double attitude_indicator_internal_roll_deg;
-        private double attitude_indicator_internal_pitch_deg;
-        private double altimeter_indicated_altitude_ft;
+        private string indicated_heading_deg;
+        private string gps_indicated_vertical_speed;
+        private string gps_indicated_ground_speed_kt;
+        private string airspeed_indicator_indicated_speed_kt;
+        private string gps_indicated_altitude_ft;
+        private string attitude_indicator_internal_roll_deg;
+        private string attitude_indicator_internal_pitch_deg;
+        private string altimeter_indicated_altitude_ft;
+        private string latitude_deg;
+        private string longitude_deg;
         public myAppModel(ITelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
@@ -28,7 +30,7 @@ namespace FlightSimulatorApp2
         }
         public void connect (string ip, int port)
         {
-
+            this.telnetClient.connect(ip, port);
         }
         public void disconnect()
         {
@@ -42,29 +44,35 @@ namespace FlightSimulatorApp2
                 while (!stop)
                 {
                     //
-                    telnetClient.write("get indicated-heading-deg");
-                    Indicated_heading_deg = Double.Parse(telnetClient.read());
+                    telnetClient.write("get /instrumentation/heading-indicator/indicated-heading-deg\n");
+                    Indicated_heading_deg = telnetClient.read();
                     //
-                    telnetClient.write("get gps_indicated-vertical-speed");
-                    Gps_indicated_vertical_speed = Double.Parse(telnetClient.read());
-                    //
-                    telnetClient.write("get gps_indicated-ground-speed-kt");
-                    gps_indicated_ground_speed_kt = Double.Parse(telnetClient.read());
-                    //
-                    telnetClient.write("get airspeed-indicator_indicated-speed-kt");
-                    Airspeed_indicator_indicated_speed_kt = Double.Parse(telnetClient.read()); 
-                    //
-                    telnetClient.write("get gps_indicated-altitude-ft");
-                    Gps_indicated_altitude_ft = Double.Parse(telnetClient.read());
-                    //
-                    telnetClient.write("get attitude-indicator_internal-roll-deg");
-                    Attitude_indicator_internal_roll_deg = Double.Parse(telnetClient.read());
-                    //
-                    telnetClient.write("get attitude-indicator_internal-pitch-deg");
-                    Attitude_indicator_internal_pitch_deg = Double.Parse(telnetClient.read());
-                    //
-                    telnetClient.write("get altimeter_indicated-altitude-ft");
-                    Altimeter_indicated_altitude_ft = Double.Parse(telnetClient.read());
+                    telnetClient.write("get /instrumentation/gps/indicated-vertical-speed\n");
+                    Gps_indicated_vertical_speed = telnetClient.read();
+
+                    telnetClient.write("get /instrumentation/gps/indicated-ground-speed-kt\n");
+                    Gps_indicated_ground_speed_kt = telnetClient.read();
+
+                    telnetClient.write("get /instrumentation/airspeed-indicator/indicated-speed-kt\n");
+                    Airspeed_indicator_indicated_speed_kt = telnetClient.read();
+
+                    telnetClient.write("get /instrumentation/gps/indicated-altitude-ft\n");
+                    Gps_indicated_altitude_ft = telnetClient.read();
+
+                    telnetClient.write("get /instrumentation/attitude-indicator/internal-roll-deg\n");
+                    Attitude_indicator_internal_roll_deg = telnetClient.read();
+
+                    telnetClient.write("get /instrumentation/attitude-indicator/internal-pitch-deg\n");
+                    Attitude_indicator_internal_pitch_deg = telnetClient.read();
+
+                    telnetClient.write("get /instrumentation/altimeter/indicated-altitude-ft\n");
+                    Altimeter_indicated_altitude_ft = telnetClient.read();
+    
+                    telnetClient.write("get /position/latitude-deg\n");
+                    Latitude_deg = telnetClient.read();
+
+                    telnetClient.write("get /position/longitude-deg\n");
+                    Longitude_deg = telnetClient.read();
                     Thread.Sleep(250);
                 }
             }).Start();
@@ -74,7 +82,7 @@ namespace FlightSimulatorApp2
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-        public double Indicated_heading_deg
+        public string Indicated_heading_deg
         {
             get { return indicated_heading_deg; }
             set
@@ -83,7 +91,7 @@ namespace FlightSimulatorApp2
                 NotifyPropertyChanged("indicated_heading_deg");
             }
         }
-        public double Gps_indicated_vertical_speed
+        public string Gps_indicated_vertical_speed
         {
             get { return gps_indicated_vertical_speed; }
             set
@@ -92,7 +100,7 @@ namespace FlightSimulatorApp2
                 NotifyPropertyChanged("gps_indicated_vertical_speed");
             }
         }
-        public double Gps_indicated_ground_speed_kt
+        public string Gps_indicated_ground_speed_kt
         {
             get { return gps_indicated_ground_speed_kt; }
             set
@@ -101,7 +109,7 @@ namespace FlightSimulatorApp2
                 NotifyPropertyChanged("gps_indicated_ground_speed_kt");
             }
         }
-        public double Airspeed_indicator_indicated_speed_kt
+        public string Airspeed_indicator_indicated_speed_kt
         {
             get { return airspeed_indicator_indicated_speed_kt; }
             set
@@ -110,7 +118,7 @@ namespace FlightSimulatorApp2
                 NotifyPropertyChanged("airspeed_indicator_indicated_speed_kt");
             }
         }
-        public double Gps_indicated_altitude_ft
+        public string Gps_indicated_altitude_ft
         {
             get { return gps_indicated_altitude_ft; }
             set
@@ -119,7 +127,7 @@ namespace FlightSimulatorApp2
                 NotifyPropertyChanged("gps_indicated_altitude_ft");
             }
         }
-        public double Attitude_indicator_internal_roll_deg
+        public string Attitude_indicator_internal_roll_deg
         {
             get { return attitude_indicator_internal_roll_deg; }
             set
@@ -128,7 +136,7 @@ namespace FlightSimulatorApp2
                 NotifyPropertyChanged("attitude_indicator_internal_roll_deg");
             }
         }
-        public double Attitude_indicator_internal_pitch_deg
+        public string Attitude_indicator_internal_pitch_deg
         {
             get { return attitude_indicator_internal_pitch_deg; }
             set
@@ -137,13 +145,31 @@ namespace FlightSimulatorApp2
                 NotifyPropertyChanged("attitude_indicator_internal_pitch_deg");
             }
         }
-        public double Altimeter_indicated_altitude_ft
+        public string Altimeter_indicated_altitude_ft
         {
             get { return altimeter_indicated_altitude_ft; }
             set
             {
                 altimeter_indicated_altitude_ft = value;
                 NotifyPropertyChanged("altimeter_indicated_altitude_ft");
+            }
+        }
+        public string Latitude_deg
+        {
+            get { return latitude_deg; }
+            set
+            {
+                latitude_deg = value;
+                NotifyPropertyChanged("latitude_deg");
+            }
+        }
+        public string Longitude_deg
+        {
+            get { return longitude_deg; }
+            set
+            {
+                longitude_deg = value;
+                NotifyPropertyChanged("longitude_deg");
             }
         }
 
