@@ -10,6 +10,6 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
-        <Controls:dashboard Grid.Column="1"></Controls:dashboard>
+        <Controls:navigationControl></Controls:navigationControl>
     </Grid>
 </Window>

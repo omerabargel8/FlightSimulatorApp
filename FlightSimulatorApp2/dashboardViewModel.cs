@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FlightSimulatorApp2
 {
-    class flightViewModel : INotifyPropertyChanged
+    class dashboardViewModel : INotifyPropertyChanged
     {
         private myAppModel model;
         public event PropertyChangedEventHandler PropertyChanged;
-        public flightViewModel(myAppModel model)
+        public dashboardViewModel(myAppModel model)
         {
             this.model = model;
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
@@ -22,7 +22,9 @@ namespace FlightSimulatorApp2
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
+            {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
         }
   
         public string VM_indicated_heading_deg

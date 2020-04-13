@@ -21,10 +21,27 @@ namespace FlightSimulatorApp2.controls
     public partial class Joystick : UserControl
     {
         private Point firstPoint = new Point();
+        public static readonly DependencyProperty xPosProperty =
+           DependencyProperty.Register("xPos", typeof(double), typeof(Joystick));
+        public double xPos
+        {
+            get
+            {
+                Console.WriteLine("###############");
+                return (double)GetValue(xPosProperty);
+            }
+            set { Console.WriteLine("$$$${0}", value); SetValue(xPosProperty, value); }
+        }
+        public static readonly DependencyProperty yPosProperty =
+           DependencyProperty.Register("yPos", typeof(double), typeof(Joystick));
+        public double yPos
+        {
+            get {return (double)GetValue(yPosProperty);}
+            set {SetValue(yPosProperty, value); }
+        }
         private void centerKnob_Completed(object sender, EventArgs e) { }
         public Joystick()
         {
-            //hh
             InitializeComponent();
         }
 
@@ -47,6 +64,8 @@ namespace FlightSimulatorApp2.controls
                 {
                     knobPosition.X = x;
                     knobPosition.Y = y;
+                    xPos = x / (Base.Width/2);
+                    yPos = y / (Base.Width/2);
                 }
             }
         }
@@ -55,12 +74,17 @@ namespace FlightSimulatorApp2.controls
         {
             knobPosition.X = 0;
             knobPosition.Y = 0;
+            xPos = 0;
+            yPos = 0;
         }
 
         private void Knob_MouseLeave(object sender, MouseEventArgs e)
         {
             knobPosition.X = 0;
             knobPosition.Y = 0;
+            xPos = 0;
+            yPos = 0;
         }
     }
+
 }

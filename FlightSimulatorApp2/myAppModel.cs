@@ -172,6 +172,13 @@ namespace FlightSimulatorApp2
                 NotifyPropertyChanged("longitude_deg");
             }
         }
-
+        public void setRudder(double xPos)
+        {
+            telnetClient.write("set /controls/flight/rudder " + xPos + "\n");
+        }
+        public void setElevator(double yPos)
+        {
+            telnetClient.write("set /controls/flight/rudder "+yPos+"\n");
+        }
     }
 }

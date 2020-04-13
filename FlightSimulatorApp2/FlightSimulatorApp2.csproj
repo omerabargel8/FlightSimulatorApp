@@ -70,6 +70,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="controls\navigationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,7 +88,10 @@
     <Compile Include="controls\Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
     </Compile>
-    <Compile Include="flightViewModel.cs" />
+    <Compile Include="controls\navigationControl.xaml.cs">
+      <DependentUpon>navigationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="dashboardViewModel.cs" />
     <Compile Include="mapViewModel.cs" />
     <Compile Include="myAppModel.cs" />
     <Compile Include="controls\Joystick.xaml.cs">
@@ -99,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MyTelnetClient.cs" />
+    <Compile Include="navigationControlVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
