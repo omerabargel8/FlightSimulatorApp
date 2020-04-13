@@ -24,12 +24,8 @@ namespace FlightSimulatorApp2.controls
         public dashboard()
         {
             InitializeComponent();
-        }
-        /**public void SetModel(myAppModel model)
-        {
-            this.model = model;
-        }*/
-        
+            DataContext = (Application.Current as App).DashboardVM;
 
+        }
     }
 }

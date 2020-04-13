@@ -23,6 +23,8 @@ namespace FlightSimulatorApp2.controls
         public Map()
         {
             InitializeComponent();
+            DataContext = (Application.Current as App).MapVM;
+
         }
     }
 }

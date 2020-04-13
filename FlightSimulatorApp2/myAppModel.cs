@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Maps.MapControl.WPF;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -23,6 +24,11 @@ namespace FlightSimulatorApp2
         private string altimeter_indicated_altitude_ft;
         private string latitude_deg;
         private string longitude_deg;
+        private double rudder;
+        private double elevator;
+        private double aileron;
+        private double throttle;
+        private Location location1;
         public myAppModel(ITelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
@@ -73,6 +79,7 @@ namespace FlightSimulatorApp2
 
                     telnetClient.write("get /position/longitude-deg\n");
                     Longitude_deg = telnetClient.read();
+                    Location1 = new Location(double.Parse(latitude_deg), double.Parse(latitude_deg));
                     Thread.Sleep(250);
                 }
             }).Start();
@@ -172,13 +179,46 @@ namespace FlightSimulatorApp2
                 NotifyPropertyChanged("longitude_deg");
             }
         }
-        public void setRudder(double xPos)
+        public double Rudder
         {
-            telnetClient.write("set /controls/flight/rudder " + xPos + "\n");
+            set
+            {
+                rudder = value;
+                telnetClient.write("set /controls/flight/rudder " + rudder + "\n");
+            }
         }
-        public void setElevator(double yPos)
+        public double Elevator
         {
-            telnetClient.write("set /controls/flight/rudder "+yPos+"\n");
+            set
+            {
+                elevator = value;
+                telnetClient.write("set /controls/flight/elevator " + elevator + "\n");
+            }
+        }
+        public double Aileron
+        {
+            set
+            {
+                aileron = value;
+                telnetClient.write("set /controls/flight/aileron " + aileron + "\n");
+            }
+        }
+        public double Throttle
+        {
+            set
+            {
+                throttle = value;
+                telnetClient.write("set /controls/engines/current-engine/throttle " + throttle + "\n");
+            }
+        }
+        public Location Location1
+        {
+            get { return location1; }
+            set
+            {
+                location1 = value;
+                NotifyPropertyChanged("location1");
+            }
         }
     }
 }

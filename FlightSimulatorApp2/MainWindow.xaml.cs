@@ -20,16 +20,10 @@ namespace FlightSimulatorApp2
     /// </summary>
     public partial class MainWindow : Window
     {
-        navigationControlVM vm;
+        //navigationControlVM vm;
         public MainWindow()
         {
             InitializeComponent();
-            myAppModel b = new myAppModel(new MyTelnetClient());
-            //or.setModel(b);
-            vm = new navigationControlVM(b);
-            DataContext = vm;
-            b.connect("127.0.0.1", 5402);
-            b.start();
         }
     }
 }

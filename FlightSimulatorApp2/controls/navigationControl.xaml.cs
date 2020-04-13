@@ -24,6 +24,7 @@ namespace FlightSimulatorApp2.controls
         public navigationControl()
         {
             InitializeComponent();
+            DataContext = (Application.Current as App).NavigationControlVM;
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

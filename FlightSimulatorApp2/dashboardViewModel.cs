@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FlightSimulatorApp2
 {
-    class dashboardViewModel : INotifyPropertyChanged
+    public class dashboardViewModel : INotifyPropertyChanged
     {
-        private myAppModel model;
+        private IAppModel model;
         public event PropertyChangedEventHandler PropertyChanged;
-        public dashboardViewModel(myAppModel model)
+        public dashboardViewModel(IAppModel model)
         {
             this.model = model;
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)

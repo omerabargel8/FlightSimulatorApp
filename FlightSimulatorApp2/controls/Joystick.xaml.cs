@@ -25,12 +25,8 @@ namespace FlightSimulatorApp2.controls
            DependencyProperty.Register("xPos", typeof(double), typeof(Joystick));
         public double xPos
         {
-            get
-            {
-                Console.WriteLine("###############");
-                return (double)GetValue(xPosProperty);
-            }
-            set { Console.WriteLine("$$$${0}", value); SetValue(xPosProperty, value); }
+            get {return (double)GetValue(xPosProperty);}
+            set {SetValue(xPosProperty, value); }
         }
         public static readonly DependencyProperty yPosProperty =
            DependencyProperty.Register("yPos", typeof(double), typeof(Joystick));

@@ -11,9 +11,9 @@
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Controls:Joystick Margin="8,0,-10,0" x:Name="joystick" Grid.ColumnSpan="2" Height="351" VerticalAlignment="Bottom" xPos="{Binding Path=VM_xPos, Mode=TwoWay}" yPos="{Binding Path=VM_yPos, Mode=OneWayToSource}"></Controls:Joystick>
-        <Slider HorizontalAlignment="Left" Height="20" Margin="70,21,0,0" VerticalAlignment="Top" Width="222" Background="#FF3A3737" Grid.ColumnSpan="2"/>
-        <Slider HorizontalAlignment="Left" Margin="28,90,0,0" VerticalAlignment="Top" Height="186" Width="21" Orientation="Vertical" RenderTransformOrigin="0.5,0.004" Background="#FF3A3737" Grid.ColumnSpan="2">
+        <Controls:Joystick Margin="8,0,-10,0" x:Name="joystick" Grid.ColumnSpan="2" Height="351" VerticalAlignment="Bottom" xPos="{Binding Path=VM_xPos, Mode=OneWayToSource}" yPos="{Binding Path=VM_yPos, Mode=OneWayToSource}"></Controls:Joystick>
+        <Slider HorizontalAlignment="Left" Height="20" Margin="70,21,0,0" VerticalAlignment="Top" Width="222" Background="#FF3A3737" Grid.ColumnSpan="2" Maximum="1" Minimum="-1" Value="{Binding VM_aileron, Mode=OneWayToSource}"/>
+        <Slider HorizontalAlignment="Left" Margin="28,90,0,0" VerticalAlignment="Top" Height="186" Width="21" Orientation="Vertical" RenderTransformOrigin="0.5,0.004" Background="#FF3A3737" Grid.ColumnSpan="2" Maximum="1" Minimum="0" Value="{Binding VM_throttle, Mode=OneWayToSource}">
             <Slider.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -34,8 +34,8 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Label Content="Throttle" HorizontalAlignment="Left" Height="33" Margin="139,-9,0,0" VerticalAlignment="Top" Width="99" FontWeight="Bold" FontSize="22" FontFamily="Sylfaen" Grid.ColumnSpan="2"/>
-        <Label Content="Aileron" HorizontalAlignment="Left" Height="42" Margin="0,295,0,0" VerticalAlignment="Top" Width="108" FontWeight="Bold" FontSize="22" FontFamily="Sylfaen" Grid.ColumnSpan="2"/>
+        <Label Content="Aileron" HorizontalAlignment="Left" Height="33" Margin="139,-9,0,0" VerticalAlignment="Top" Width="99" FontWeight="Bold" FontSize="22" FontFamily="Sylfaen" Grid.ColumnSpan="2"/>
+        <Label Content="Throttle" HorizontalAlignment="Left" Height="42" Margin="0,295,0,0" VerticalAlignment="Top" Width="108" FontWeight="Bold" FontSize="22" FontFamily="Sylfaen" Grid.ColumnSpan="2"/>
         <Label Grid.ColumnSpan="2" Content="{Binding ElementName=joystick, Path=xPos, Mode=OneWay}" Height="24" Margin="275,313,41.333,0" VerticalAlignment="Top" Background="#FF943D3D"/>
         <Label Grid.ColumnSpan="2" Content="{Binding ElementName=joystick, Path=yPos, Mode=OneWay}" HorizontalAlignment="Left" Height="28" Margin="310,280,0,0" VerticalAlignment="Top" Width="39" Background="#FF1A98D0"/>
     </Grid>

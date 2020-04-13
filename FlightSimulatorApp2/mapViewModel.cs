@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FlightSimulatorApp2
 {
-    class mapViewModel : INotifyPropertyChanged
+   public class mapViewModel : INotifyPropertyChanged
     {
-        private myAppModel model;
+        private IAppModel model;
         public event PropertyChangedEventHandler PropertyChanged;
-        public mapViewModel(myAppModel model)
+        public mapViewModel(IAppModel model)
         {
             this.model = model;
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
@@ -33,9 +33,24 @@ namespace FlightSimulatorApp2
         {
             get { return model.Longitude_deg; }
         }
-        public string Location
+       
+        public Location VM_location1
         {
-            get { return VM_longitude_deg + "," + VM_latitude_deg; }
+            get
+            {
+                Console.WriteLine("@@@@@@@@@@@" + model.Location1);
+                return model.Location1;
+            }
         }
+        /**
+         * public string Location
+        {
+            get
+            {
+                Console.WriteLine("@@@@@@@@@@@ VM_longitude_deg + ", " + VM_latitude_deg");
+                return VM_longitude_deg + "," + VM_latitude_deg;
+            }
+        }
+    */
     }
 }

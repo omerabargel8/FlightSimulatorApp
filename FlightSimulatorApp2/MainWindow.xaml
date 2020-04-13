@@ -7,9 +7,23 @@
         xmlns:Controls ="clr-namespace:FlightSimulatorApp2.controls"
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="700" Width="1100">
 
     <Grid>
-        <Controls:navigationControl></Controls:navigationControl>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="593*" />
+            <ColumnDefinition Width="252*" />
+            <ColumnDefinition Width="182*" />
+            <ColumnDefinition Width="257*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="163*" />
+            <RowDefinition Height="132*" />
+            <RowDefinition Height="174*" />
+            <RowDefinition Height="199*" />
+        </Grid.RowDefinitions>
+        <Controls:Map x:Name="map" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="7,130,10.333,5.667"/>
+        <Controls:dashboard x:Name="dashboard" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"></Controls:dashboard>
+        <Controls:navigationControl x:Name="navigationControl" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" ></Controls:navigationControl>
     </Grid>
 </Window>
