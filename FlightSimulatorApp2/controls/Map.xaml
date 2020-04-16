@@ -10,8 +10,8 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <m:Map CredentialsProvider="sJNGetncVqg7DmYa2Itk~bqbL9-r1O-oKox3SdJDGxg~AjVHb9GyYILChhVFfuxX4IxYhlg9r5B3BgXnNXTljVWUeG_w2vfEx9emolf6bCjJ" 
-               Center="32.0055, 34.8854" ZoomLevel="12">
-            <m:Pushpin Location="{Binding Path=VM_location1, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
+               Center="32.0055, 34.8854" ZoomLevel="12" Margin="13,9,10,11">
+            <m:Pushpin Location="{Binding Path=VM_location, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"/>
         </m:Map>
     </Grid>
 </UserControl>

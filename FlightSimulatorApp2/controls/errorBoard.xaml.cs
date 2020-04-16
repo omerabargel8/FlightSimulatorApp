@@ -16,14 +16,14 @@ using System.Windows.Shapes;
 namespace FlightSimulatorApp2.controls
 {
     /// <summary>
-    /// Interaction logic for Map.xaml
+    /// Interaction logic for errorBoard.xaml
     /// </summary>
-    public partial class Map : UserControl
+    public partial class errorBoard : UserControl
     {
-        public Map()
+        public errorBoard()
         {
             InitializeComponent();
-            DataContext = (Application.Current as App).MapVM;
+            DataContext = (Application.Current as App).ErrorBoardVM;
         }
     }
 }

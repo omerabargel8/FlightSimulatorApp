@@ -20,12 +20,10 @@ namespace FlightSimulatorApp2.controls
     /// </summary>
     public partial class dashboard : UserControl
     {
-        myAppModel model;
         public dashboard()
         {
             InitializeComponent();
             DataContext = (Application.Current as App).DashboardVM;
-
         }
     }
 }

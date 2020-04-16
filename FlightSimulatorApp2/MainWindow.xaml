@@ -7,7 +7,7 @@
         xmlns:Controls ="clr-namespace:FlightSimulatorApp2.controls"
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1100">
+        Title="MainWindow" Height="700" Width="1200">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -21,9 +21,12 @@
             <RowDefinition Height="132*" />
             <RowDefinition Height="174*" />
             <RowDefinition Height="199*" />
+            <RowDefinition Height="199*" />
         </Grid.RowDefinitions>
-        <Controls:Map x:Name="map" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="7,130,10.333,5.667"/>
-        <Controls:dashboard x:Name="dashboard" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"></Controls:dashboard>
-        <Controls:navigationControl x:Name="navigationControl" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" ></Controls:navigationControl>
+        <Controls:Map Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="7,9,9,6"/>
+        <Controls:navigationControl  Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" Grid.RowSpan="2"></Controls:navigationControl>
+        <Controls:dashboard  Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="3"></Controls:dashboard>
+        <Controls:connect Grid.ColumnSpan="2"></Controls:connect>
+        <Controls:errorBoard  Grid.Row="1" Grid.ColumnSpan="2"></Controls:errorBoard>
     </Grid>
 </Window>

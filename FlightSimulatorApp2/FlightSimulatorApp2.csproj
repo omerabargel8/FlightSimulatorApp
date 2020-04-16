@@ -39,6 +39,7 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Bing Maps WPF Control\V1\Libraries\Microsoft.Maps.MapControl.WPF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,7 +59,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="controls\connect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="controls\dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="controls\errorBoard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -82,8 +91,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="controls\connect.xaml.cs">
+      <DependentUpon>connect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="controls\dashboard.xaml.cs">
       <DependentUpon>dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="controls\errorBoard.xaml.cs">
+      <DependentUpon>errorBoard.xaml</DependentUpon>
     </Compile>
     <Compile Include="controls\Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
@@ -92,6 +107,7 @@
       <DependentUpon>navigationControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="dashboardViewModel.cs" />
+    <Compile Include="errorBoardVM.cs" />
     <Compile Include="mapViewModel.cs" />
     <Compile Include="myAppModel.cs" />
     <Compile Include="controls\Joystick.xaml.cs">
@@ -131,6 +147,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="controls\dashboardbutton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="controls\rudderAilronButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

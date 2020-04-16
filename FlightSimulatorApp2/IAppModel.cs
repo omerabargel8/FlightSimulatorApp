@@ -27,6 +27,7 @@ namespace FlightSimulatorApp2
         double Elevator { set; }
         double Aileron { set; }
         double Throttle { set; }
-        Location Location1 { get; set; }
+        Location Location { get; set; }
+        string Errors { get; set; }
     }
 }

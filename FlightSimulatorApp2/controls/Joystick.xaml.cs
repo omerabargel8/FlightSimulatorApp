@@ -60,8 +60,9 @@ namespace FlightSimulatorApp2.controls
                 {
                     knobPosition.X = x;
                     knobPosition.Y = y;
-                    xPos = x / (Base.Width/2);
-                    yPos = y / (Base.Width/2);
+                    xPos = Math.Round(x / (Base.Width / 2), 3);
+                    yPos = Math.Round(y / (Base.Width / 2), 3);
+
                 }
             }
         }

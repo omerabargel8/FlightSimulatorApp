@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -28,7 +30,15 @@ namespace FlightSimulatorApp2
         private double elevator;
         private double aileron;
         private double throttle;
-        private Location location1;
+        private Location location;
+        private Mutex mutex = new Mutex();
+        private double check;
+        private bool isNumLatitude;
+        private bool isNumLongitude;
+        private double _latitude;
+        private double _longitude;
+        private string check1;
+        private string errors;
         public myAppModel(ITelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
@@ -47,40 +57,106 @@ namespace FlightSimulatorApp2
         {
             new Thread(delegate ()
             {
-                while (!stop)
+            Stopwatch watch = new Stopwatch();
+            while (!stop)
+            {
+                try
                 {
                     //
+                    mutex.WaitOne();
                     telnetClient.write("get /instrumentation/heading-indicator/indicated-heading-deg\n");
                     Indicated_heading_deg = telnetClient.read();
+                    Indicated_heading_deg = Indicated_heading_deg.Substring(0, 5);
+                    mutex.ReleaseMutex();
                     //
+                    mutex.WaitOne();
                     telnetClient.write("get /instrumentation/gps/indicated-vertical-speed\n");
                     Gps_indicated_vertical_speed = telnetClient.read();
-
+                    Gps_indicated_vertical_speed = Gps_indicated_vertical_speed.Substring(0, 5);
+                    mutex.ReleaseMutex();
+                    //
+                    mutex.WaitOne();
                     telnetClient.write("get /instrumentation/gps/indicated-ground-speed-kt\n");
                     Gps_indicated_ground_speed_kt = telnetClient.read();
-
+                    Gps_indicated_ground_speed_kt = Gps_indicated_ground_speed_kt.Substring(0, 5);
+                    mutex.ReleaseMutex();
+                    //
+                    mutex.WaitOne();
                     telnetClient.write("get /instrumentation/airspeed-indicator/indicated-speed-kt\n");
                     Airspeed_indicator_indicated_speed_kt = telnetClient.read();
-
+                    Airspeed_indicator_indicated_speed_kt = Airspeed_indicator_indicated_speed_kt.Substring(0, 5);
+                    mutex.ReleaseMutex();
+                    //
+                    mutex.WaitOne();
                     telnetClient.write("get /instrumentation/gps/indicated-altitude-ft\n");
                     Gps_indicated_altitude_ft = telnetClient.read();
+                    Gps_indicated_altitude_ft = Gps_indicated_altitude_ft.Substring(0, 5);
+                    mutex.ReleaseMutex();
 
+                    mutex.WaitOne();
                     telnetClient.write("get /instrumentation/attitude-indicator/internal-roll-deg\n");
                     Attitude_indicator_internal_roll_deg = telnetClient.read();
-
+                    Attitude_indicator_internal_roll_deg = Attitude_indicator_internal_roll_deg.Substring(0, 5);
+                    mutex.ReleaseMutex();
+                    //
+                    mutex.WaitOne();
                     telnetClient.write("get /instrumentation/attitude-indicator/internal-pitch-deg\n");
                     Attitude_indicator_internal_pitch_deg = telnetClient.read();
-
+                    Attitude_indicator_internal_pitch_deg = Attitude_indicator_internal_pitch_deg.Substring(0, 5);
+                    mutex.ReleaseMutex();
+                    //
+                    mutex.WaitOne();
                     telnetClient.write("get /instrumentation/altimeter/indicated-altitude-ft\n");
                     Altimeter_indicated_altitude_ft = telnetClient.read();
-    
+                    Altimeter_indicated_altitude_ft = Altimeter_indicated_altitude_ft.Substring(0, 5);
+                    mutex.ReleaseMutex();
+                    //
+                    mutex.WaitOne();
                     telnetClient.write("get /position/latitude-deg\n");
-                    Latitude_deg = telnetClient.read();
-
+                    check1 = telnetClient.read();
+                    isNumLatitude = double.TryParse(check1, out check);
+                    if (isNumLatitude)
+                    {
+                        _latitude = double.Parse(check1);
+                        if (_latitude <= 90 && _latitude >= -90)
+                            Latitude_deg = check1;
+                        else
+                            Errors = Errors + "Out of bounds ";
+                    }
+                    mutex.ReleaseMutex();
+                    //
+                    mutex.WaitOne();
                     telnetClient.write("get /position/longitude-deg\n");
-                    Longitude_deg = telnetClient.read();
-                    Location1 = new Location(double.Parse(latitude_deg), double.Parse(latitude_deg));
+                    check1 = telnetClient.read();
+                    isNumLongitude = double.TryParse(check1, out check);
+                    if (isNumLongitude)
+                    {
+                        _longitude = double.Parse(check1);
+                        if (_longitude <= 180 && _longitude >= -180)
+                            Longitude_deg = check1;
+                        else
+                            Errors = Errors + "Out of bounds ";
+                    }
+                    mutex.ReleaseMutex();
+                    //
+                    mutex.WaitOne();
+                    if (isNumLatitude && isNumLongitude)
+                        Location = new Location(_latitude, _longitude);
+                    mutex.ReleaseMutex();
                     Thread.Sleep(250);
+                }
+                catch (IOException)
+                {
+                    if (this.telnetClient.isConnect())
+                        Errors = Errors + "Slowness was detected ";
+                    else
+                        Errors = Errors + "Server is down ";
+                }
+               catch(InvalidOperationException)
+                    {
+                        Errors = Errors + "Server is dissconnected";
+                    }
+                  
                 }
             }).Start();
         }
@@ -167,7 +243,7 @@ namespace FlightSimulatorApp2
             set
             {
                 latitude_deg = value;
-                NotifyPropertyChanged("latitude_deg");
+                NotifyPropertyChanged("location");
             }
         }
         public string Longitude_deg
@@ -176,48 +252,136 @@ namespace FlightSimulatorApp2
             set
             {
                 longitude_deg = value;
-                NotifyPropertyChanged("longitude_deg");
+                NotifyPropertyChanged("location");
             }
         }
         public double Rudder
         {
             set
             {
-                rudder = value;
-                telnetClient.write("set /controls/flight/rudder " + rudder + "\n");
+                if (value != rudder)
+                {
+                    try
+                    {
+                        mutex.WaitOne();
+                        rudder = value;
+                        telnetClient.write("set /controls/flight/rudder " + rudder + "\n");
+                        telnetClient.read();
+                        mutex.ReleaseMutex();
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Errors = Errors + "Server is dissconnected ";
+                    }
+                    catch (IOException)
+                    {
+                        Errors = Errors + "Server is down ";
+                    }
+                    
+                }
             }
         }
         public double Elevator
         {
             set
             {
-                elevator = value;
-                telnetClient.write("set /controls/flight/elevator " + elevator + "\n");
+                if (value != elevator)
+                {
+                    try
+                    {
+                        mutex.WaitOne();
+                        elevator = value;
+                        telnetClient.write("set /controls/flight/elevator " + elevator + "\n");
+                        telnetClient.read();
+                        mutex.ReleaseMutex();
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Errors = Errors + "Server is dissconnected ";
+                    }
+                    catch (IOException)
+                    {
+                        if (this.telnetClient.isConnect())
+                            Errors = Errors + "Slowness was detected ";
+                        else
+                            Errors = Errors + "Server is down ";
+                    }
+                    
+                }
             }
         }
         public double Aileron
         {
             set
             {
-                aileron = value;
-                telnetClient.write("set /controls/flight/aileron " + aileron + "\n");
+                if (value != aileron)
+                {
+                    try
+                    {
+                        mutex.WaitOne();
+                        aileron = value;
+                        telnetClient.write("set /controls/flight/aileron " + aileron + "\n");
+                        telnetClient.read();
+                        mutex.ReleaseMutex();
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Errors = Errors + "Server is dissconnected ";
+                    }
+                    catch (IOException)
+                    {
+                        if (this.telnetClient.isConnect())
+                            Errors = Errors + "Slowness was detected ";
+                        else
+                            Errors = Errors + "Server is down ";
+                    }
+                }
             }
         }
         public double Throttle
         {
             set
             {
-                throttle = value;
-                telnetClient.write("set /controls/engines/current-engine/throttle " + throttle + "\n");
+                if (value != throttle)
+                {
+                    try
+                    {
+                        mutex.WaitOne();
+                        throttle = value;
+                        telnetClient.write("set /controls/engines/current-engine/throttle " + throttle + "\n");
+                        telnetClient.read();
+                        mutex.ReleaseMutex();
+                    }
+                    catch (NullReferenceException)
+                    {
+                        Errors = Errors + "Server is dissconnected ";
+                    }
+                    catch (IOException)
+                    {
+                        if (this.telnetClient.isConnect())
+                            Errors = Errors + "Slowness was detected ";
+                        else
+                            Errors = Errors + "Server is down ";
+                    }
+                }
             }
         }
-        public Location Location1
+        public Location Location
         {
-            get { return location1; }
+            get { return location; }
             set
             {
-                location1 = value;
-                NotifyPropertyChanged("location1");
+                location = value;
+                NotifyPropertyChanged("location");
+            }
+        }
+        public string Errors
+        {
+            get { return errors; }
+            set
+            {
+                errors = value;
+                NotifyPropertyChanged("errors");
             }
         }
     }

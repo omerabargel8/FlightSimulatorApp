@@ -1,5 +1,4 @@
-﻿using Microsoft.Maps.MapControl.WPF;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FlightSimulatorApp2
 {
-   public class mapViewModel : INotifyPropertyChanged
+    public class errorBoardVM :INotifyPropertyChanged
     {
         private IAppModel model;
         public event PropertyChangedEventHandler PropertyChanged;
-        public mapViewModel(IAppModel model)
+        public errorBoardVM(IAppModel model)
         {
             this.model = model;
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
@@ -23,24 +22,13 @@ namespace FlightSimulatorApp2
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        }
-        public string VM_latitude_deg
-        {
-            get { return model.Latitude_deg; }
-        }
-        public string VM_longitude_deg
-        {
-            get { return model.Longitude_deg; }
-        }
-       
-        public Location VM_location
-        {
-            get
             {
-                return model.Location;
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
         }
-
+        public string VM_errors
+        {
+            get { return model.Errors; }
+        }
     }
 }

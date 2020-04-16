@@ -20,7 +20,6 @@ namespace FlightSimulatorApp2
     /// </summary>
     public partial class MainWindow : Window
     {
-        //navigationControlVM vm;
         public MainWindow()
         {
             InitializeComponent();
