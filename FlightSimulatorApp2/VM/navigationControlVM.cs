@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace FlightSimulatorApp2
 {
-    public class navigationControlVM : INotifyPropertyChanged
+    public class navigationControlVM
     {
         private IAppModel model;
         private double xPos;
         private double yPos;
         private double throttle = 0;
         private double aileron = 0;
-        public event PropertyChangedEventHandler PropertyChanged;
+        //constructor
         public navigationControlVM(IAppModel model)
         {
             this.model = model;
         }
+        //properties
         public double VM_xPos
         {
             get {

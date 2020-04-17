@@ -10,17 +10,18 @@ namespace FlightSimulatorApp2
 {
     public interface IAppModel : INotifyPropertyChanged 
     {
+        //ptoperties
         void connect(string ip, int port);
         void disconnect();
         void start();
-        string Indicated_heading_deg { get; set; }
-        string Gps_indicated_vertical_speed { get; set; }
-        string Gps_indicated_ground_speed_kt { get; set; }
-        string Airspeed_indicator_indicated_speed_kt { get; set; }
-        string Gps_indicated_altitude_ft { get; set; }
-        string Attitude_indicator_internal_roll_deg { get; set; }
-        string Attitude_indicator_internal_pitch_deg { get; set; }
-        string Altimeter_indicated_altitude_ft { get; set; }
+        string Heading_deg { get; set; }
+        string Vertical_speed { get; set; }
+        string Ground_speed { get; set; }
+        string Airspeed { get; set; }
+        string Indicated_altitude { get; set; }
+        string Internal_roll { get; set; }
+        string Internal_pitch { get; set; }
+        string Altimeter_altitude { get; set; }
         string Latitude_deg { get; set; }
         string Longitude_deg { get; set; }
         double Rudder { set; }
@@ -29,5 +30,6 @@ namespace FlightSimulatorApp2
         double Throttle { set; }
         Location Location { get; set; }
         string Errors { get; set; }
+        string Status { get; set; }
     }
 }

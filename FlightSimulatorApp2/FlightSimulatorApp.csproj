@@ -75,7 +75,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="controls\Map.xaml">
+    <Page Include="controls\map.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -100,29 +100,29 @@
     <Compile Include="controls\errorBoard.xaml.cs">
       <DependentUpon>errorBoard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="controls\Map.xaml.cs">
-      <DependentUpon>Map.xaml</DependentUpon>
+    <Compile Include="controls\map.xaml.cs">
+      <DependentUpon>map.xaml</DependentUpon>
     </Compile>
     <Compile Include="controls\navigationControl.xaml.cs">
       <DependentUpon>navigationControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="dashboardViewModel.cs" />
-    <Compile Include="errorBoardVM.cs" />
-    <Compile Include="mapViewModel.cs" />
-    <Compile Include="myAppModel.cs" />
+    <Compile Include="VM\dashboardVM.cs" />
+    <Compile Include="VM\errorBoardVM.cs" />
+    <Compile Include="VM\mapVM.cs" />
+    <Compile Include="model\myAppModel.cs" />
     <Compile Include="controls\Joystick.xaml.cs">
       <DependentUpon>Joystick.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IAppModel.cs" />
-    <Compile Include="ITelnetClient.cs" />
+    <Compile Include="model\IAppModel.cs" />
+    <Compile Include="model\ITelnetClient.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyTelnetClient.cs" />
-    <Compile Include="navigationControlVM.cs" />
+    <Compile Include="model\MyTelnetClient.cs" />
+    <Compile Include="VM\navigationControlVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -153,6 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="controls\rudderAilronButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="controls\plane.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

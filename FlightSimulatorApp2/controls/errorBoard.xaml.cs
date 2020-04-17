@@ -23,6 +23,7 @@ namespace FlightSimulatorApp2.controls
         public errorBoard()
         {
             InitializeComponent();
+            //set the dataContext from app
             DataContext = (Application.Current as App).ErrorBoardVM;
         }
     }

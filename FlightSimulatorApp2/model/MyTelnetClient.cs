@@ -11,22 +11,23 @@ namespace FlightSimulatorApp2
     class MyTelnetClient : ITelnetClient {
         private TcpClient socket;
         private NetworkStream stream;
-        //private string blaa;
 
+        //this method connect to server with the arguments ip, port
         public void connect(string ip, int port) {
             try
             {
                 socket = new TcpClient(ip, port);
                 stream = socket.GetStream();
+                //define receive and send timeout
                 socket.ReceiveTimeout = 10000;
                 socket.SendTimeout = 10000;
-                //blaa = "";
                 Console.WriteLine("Connection established");
             } catch (SocketException e)
             {
                 Console.WriteLine("ERROR: {0}", e);
             }
         }
+        //send to server the command received
         public void write(string command) 
         {
             try
@@ -45,6 +46,7 @@ namespace FlightSimulatorApp2
             
 
         }
+        //reads data from server
         public string read() {
             string received_data = "";
             try
@@ -54,18 +56,18 @@ namespace FlightSimulatorApp2
                 received_data = Encoding.ASCII.GetString(read, 0, read.Length);
                 return received_data;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                //Console.WriteLine("ERROR: {0}", e);
-                //return "ERROR";
                 throw new IOException();
             }
         }
+        //disconnect from server
         public void disconnect() 
         {
             socket.Close();
             Console.WriteLine("Disconnecting...");
         }
+        //checks if the server is still connected
         public bool isConnect()
         {
             return this.socket.Connected && socket != null;

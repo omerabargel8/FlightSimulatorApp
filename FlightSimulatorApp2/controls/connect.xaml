@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FlightSimulatorApp2.controls"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="800">
+             d:DesignHeight="100" Width="740.742">
     <Grid>
         <Button Content="Connect" x:Name="connectButton" HorizontalAlignment="Left" Height="53" Margin="11,25,0,0" VerticalAlignment="Top" Width="103" Click="connectButton_Click"/>
         <Button Content="Disconnect" x:Name="disconnectButton" HorizontalAlignment="Left" Height="53" Margin="131,25,0,0" VerticalAlignment="Top" Width="103" Click="disconnectButton_Click"/>
@@ -13,6 +13,6 @@
         <TextBox x:Name="portTextBox" HorizontalAlignment="Left" Height="35" Margin="546,43,0,0" TextWrapping="Wrap" Text="5402" VerticalAlignment="Top" Width="140" TextChanged="portTextBox_TextChanged"/>
         <Label Content="IP:" HorizontalAlignment="Left" Height="46" Margin="240,36,0,0" VerticalAlignment="Top" Width="111" FontWeight="Bold" FontSize="24"/>
         <Label Content="Port:" HorizontalAlignment="Left" Height="42" Margin="450,37,0,0" VerticalAlignment="Top" Width="86" FontWeight="Bold" FontSize="24"/>
-
+        <Border BorderBrush="Black" BorderThickness="1"></Border>
     </Grid>
 </UserControl>

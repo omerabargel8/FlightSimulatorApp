@@ -23,6 +23,11 @@ namespace FlightSimulatorApp2.controls
         private Point firstPoint = new Point();
         public static readonly DependencyProperty xPosProperty =
            DependencyProperty.Register("xPos", typeof(double), typeof(Joystick));
+        public Joystick()
+        {
+            InitializeComponent();
+        }
+        //properties
         public double xPos
         {
             get {return (double)GetValue(xPosProperty);}
@@ -36,11 +41,6 @@ namespace FlightSimulatorApp2.controls
             set {SetValue(yPosProperty, value); }
         }
         private void centerKnob_Completed(object sender, EventArgs e) { }
-        public Joystick()
-        {
-            InitializeComponent();
-        }
-
 
         private void Knob_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -50,6 +50,7 @@ namespace FlightSimulatorApp2.controls
             }
         }
 
+        //updates the knob location
         private void Knob_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -66,7 +67,7 @@ namespace FlightSimulatorApp2.controls
                 }
             }
         }
-
+        //returns the knob to center when release the mouse
         private void Knob_MouseUp(object sender, MouseButtonEventArgs e)
         {
             knobPosition.X = 0;

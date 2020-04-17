@@ -18,11 +18,12 @@ namespace FlightSimulatorApp2.controls
     /// <summary>
     /// Interaction logic for Map.xaml
     /// </summary>
-    public partial class Map : UserControl
+    public partial class map : UserControl
     {
-        public Map()
+        public map()
         {
             InitializeComponent();
+            //set the dataContext from app
             DataContext = (Application.Current as App).MapVM;
         }
     }

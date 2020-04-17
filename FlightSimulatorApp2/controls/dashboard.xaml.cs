@@ -23,6 +23,7 @@ namespace FlightSimulatorApp2.controls
         public dashboard()
         {
             InitializeComponent();
+            //set the dataContext from app
             DataContext = (Application.Current as App).DashboardVM;
         }
     }

@@ -16,14 +16,14 @@ namespace FlightSimulatorApp2
         ITelnetClient telnetClient;
         volatile Boolean stop;
         public event PropertyChangedEventHandler PropertyChanged;
-        private string indicated_heading_deg;
-        private string gps_indicated_vertical_speed;
-        private string gps_indicated_ground_speed_kt;
-        private string airspeed_indicator_indicated_speed_kt;
-        private string gps_indicated_altitude_ft;
-        private string attitude_indicator_internal_roll_deg;
-        private string attitude_indicator_internal_pitch_deg;
-        private string altimeter_indicated_altitude_ft;
+        private string heading_deg;
+        private string vertical_speed;
+        private string ground_speed;
+        private string airspeed;
+        private string indicated_altitude;
+        private string internal_roll;
+        private string internal_pitch;
+        private string altimeter_altitude;
         private string latitude_deg;
         private string longitude_deg;
         private double rudder;
@@ -39,25 +39,39 @@ namespace FlightSimulatorApp2
         private double _longitude;
         private string check1;
         private string errors;
+        private string status;
+        
+        //constructor
         public myAppModel(ITelnetClient telnetClient)
         {
             this.telnetClient = telnetClient;
             stop = false;
         }
+        //connect to server using telnetClient
         public void connect (string ip, int port)
         {
-            this.telnetClient.connect(ip, port);
+            try
+            {
+                this.telnetClient.connect(ip, port);
+                Status = "Connected";
+            } 
+            catch
+            {
+                Errors = "--Unable to connect to server--";
+            }
         }
+        //disconnect from server using telnetClient
         public void disconnect()
         {
             stop = true;
             telnetClient.disconnect();
+            Status = "Disconnected";
         }
+        //this method runs loop, gets and updates the values of all properties
         public void start()
         {
             new Thread(delegate ()
             {
-            Stopwatch watch = new Stopwatch();
             while (!stop)
             {
                 try
@@ -65,81 +79,86 @@ namespace FlightSimulatorApp2
                     //
                     mutex.WaitOne();
                     telnetClient.write("get /instrumentation/heading-indicator/indicated-heading-deg\n");
-                    Indicated_heading_deg = telnetClient.read();
-                    Indicated_heading_deg = Indicated_heading_deg.Substring(0, 5);
+                    Heading_deg = telnetClient.read();
+                    Heading_deg = Heading_deg.Substring(0, 5);
                     mutex.ReleaseMutex();
                     //
                     mutex.WaitOne();
                     telnetClient.write("get /instrumentation/gps/indicated-vertical-speed\n");
-                    Gps_indicated_vertical_speed = telnetClient.read();
-                    Gps_indicated_vertical_speed = Gps_indicated_vertical_speed.Substring(0, 5);
+                    Vertical_speed = telnetClient.read();
+                    Vertical_speed = Vertical_speed.Substring(0, 5);
                     mutex.ReleaseMutex();
                     //
                     mutex.WaitOne();
                     telnetClient.write("get /instrumentation/gps/indicated-ground-speed-kt\n");
-                    Gps_indicated_ground_speed_kt = telnetClient.read();
-                    Gps_indicated_ground_speed_kt = Gps_indicated_ground_speed_kt.Substring(0, 5);
+                    Ground_speed = telnetClient.read();
+                    Ground_speed = Ground_speed.Substring(0, 5);
                     mutex.ReleaseMutex();
                     //
                     mutex.WaitOne();
                     telnetClient.write("get /instrumentation/airspeed-indicator/indicated-speed-kt\n");
-                    Airspeed_indicator_indicated_speed_kt = telnetClient.read();
-                    Airspeed_indicator_indicated_speed_kt = Airspeed_indicator_indicated_speed_kt.Substring(0, 5);
+                    Airspeed = telnetClient.read();
+                    Airspeed = Airspeed.Substring(0, 5);
                     mutex.ReleaseMutex();
                     //
                     mutex.WaitOne();
                     telnetClient.write("get /instrumentation/gps/indicated-altitude-ft\n");
-                    Gps_indicated_altitude_ft = telnetClient.read();
-                    Gps_indicated_altitude_ft = Gps_indicated_altitude_ft.Substring(0, 5);
+                    Indicated_altitude = telnetClient.read();
+                    Indicated_altitude = Indicated_altitude.Substring(0, 5);
                     mutex.ReleaseMutex();
 
                     mutex.WaitOne();
                     telnetClient.write("get /instrumentation/attitude-indicator/internal-roll-deg\n");
-                    Attitude_indicator_internal_roll_deg = telnetClient.read();
-                    Attitude_indicator_internal_roll_deg = Attitude_indicator_internal_roll_deg.Substring(0, 5);
+                    Internal_roll = telnetClient.read();
+                    Internal_roll = Internal_roll.Substring(0, 5);
                     mutex.ReleaseMutex();
                     //
                     mutex.WaitOne();
                     telnetClient.write("get /instrumentation/attitude-indicator/internal-pitch-deg\n");
-                    Attitude_indicator_internal_pitch_deg = telnetClient.read();
-                    Attitude_indicator_internal_pitch_deg = Attitude_indicator_internal_pitch_deg.Substring(0, 5);
+                    Internal_pitch = telnetClient.read();
+                    Internal_pitch = Internal_pitch.Substring(0, 5);
                     mutex.ReleaseMutex();
                     //
                     mutex.WaitOne();
                     telnetClient.write("get /instrumentation/altimeter/indicated-altitude-ft\n");
-                    Altimeter_indicated_altitude_ft = telnetClient.read();
-                    Altimeter_indicated_altitude_ft = Altimeter_indicated_altitude_ft.Substring(0, 5);
+                    Altimeter_altitude = telnetClient.read();
+                    Altimeter_altitude = Altimeter_altitude.Substring(0, 5);
                     mutex.ReleaseMutex();
                     //
                     mutex.WaitOne();
                     telnetClient.write("get /position/latitude-deg\n");
                     check1 = telnetClient.read();
+                    //try to convert string to doule
                     isNumLatitude = double.TryParse(check1, out check);
                     if (isNumLatitude)
                     {
                         _latitude = double.Parse(check1);
+                        //checks bounds of map
                         if (_latitude <= 90 && _latitude >= -90)
                             Latitude_deg = check1;
                         else
-                            Errors = Errors + "Out of bounds ";
+                            Errors = Errors + "--Out of bound--";
                     }
                     mutex.ReleaseMutex();
                     //
                     mutex.WaitOne();
                     telnetClient.write("get /position/longitude-deg\n");
                     check1 = telnetClient.read();
+                    //try to convert string to doule
                     isNumLongitude = double.TryParse(check1, out check);
                     if (isNumLongitude)
                     {
                         _longitude = double.Parse(check1);
-                        if (_longitude <= 180 && _longitude >= -180)
+                            //checks bounds of map
+                            if (_longitude <= 180 && _longitude >= -180)
                             Longitude_deg = check1;
                         else
-                            Errors = Errors + "Out of bounds ";
+                            Errors = Errors + "--Out of bound--";
                     }
                     mutex.ReleaseMutex();
                     //
                     mutex.WaitOne();
+                    //update location only if both longitude and latitude are double numbers
                     if (isNumLatitude && isNumLongitude)
                         Location = new Location(_latitude, _longitude);
                     mutex.ReleaseMutex();
@@ -148,13 +167,13 @@ namespace FlightSimulatorApp2
                 catch (IOException)
                 {
                     if (this.telnetClient.isConnect())
-                        Errors = Errors + "Slowness was detected ";
+                        Errors = Errors + "--Slowness was detected--";
                     else
-                        Errors = Errors + "Server is down ";
+                        Errors = "-Server is down-";
                 }
                catch(InvalidOperationException)
                     {
-                        Errors = Errors + "Server is dissconnected";
+                        Errors = "--Server is dissconnected--";
                     }
                   
                 }
@@ -165,76 +184,79 @@ namespace FlightSimulatorApp2
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-        public string Indicated_heading_deg
+
+
+        //properties
+        public string Heading_deg
         {
-            get { return indicated_heading_deg; }
+            get { return heading_deg; }
             set
             {
-                indicated_heading_deg = value;
-                NotifyPropertyChanged("indicated_heading_deg");
+                heading_deg = value;
+                NotifyPropertyChanged("heading_deg");
             }
         }
-        public string Gps_indicated_vertical_speed
+        public string Vertical_speed
         {
-            get { return gps_indicated_vertical_speed; }
+            get { return vertical_speed; }
             set
             {
-                gps_indicated_vertical_speed = value;
-                NotifyPropertyChanged("gps_indicated_vertical_speed");
+                vertical_speed = value;
+                NotifyPropertyChanged("vertical_speed");
             }
         }
-        public string Gps_indicated_ground_speed_kt
+        public string Ground_speed
         {
-            get { return gps_indicated_ground_speed_kt; }
+            get { return ground_speed; }
             set
             {
-                gps_indicated_ground_speed_kt = value;
-                NotifyPropertyChanged("gps_indicated_ground_speed_kt");
+                ground_speed = value;
+                NotifyPropertyChanged("ground_speed");
             }
         }
-        public string Airspeed_indicator_indicated_speed_kt
+        public string Airspeed
         {
-            get { return airspeed_indicator_indicated_speed_kt; }
+            get { return airspeed; }
             set
             {
-                airspeed_indicator_indicated_speed_kt = value;
-                NotifyPropertyChanged("airspeed_indicator_indicated_speed_kt");
+                airspeed = value;
+                NotifyPropertyChanged("airspeed");
             }
         }
-        public string Gps_indicated_altitude_ft
+        public string Indicated_altitude
         {
-            get { return gps_indicated_altitude_ft; }
+            get { return indicated_altitude; }
             set
             {
-                gps_indicated_altitude_ft = value;
-                NotifyPropertyChanged("gps_indicated_altitude_ft");
+                indicated_altitude = value;
+                NotifyPropertyChanged("indicated_altitude");
             }
         }
-        public string Attitude_indicator_internal_roll_deg
+        public string Internal_roll
         {
-            get { return attitude_indicator_internal_roll_deg; }
+            get { return internal_roll; }
             set
             {
-                attitude_indicator_internal_roll_deg = value;
-                NotifyPropertyChanged("attitude_indicator_internal_roll_deg");
+                internal_roll = value;
+                NotifyPropertyChanged("internal_roll");
             }
         }
-        public string Attitude_indicator_internal_pitch_deg
+        public string Internal_pitch
         {
-            get { return attitude_indicator_internal_pitch_deg; }
+            get { return internal_pitch; }
             set
             {
-                attitude_indicator_internal_pitch_deg = value;
-                NotifyPropertyChanged("attitude_indicator_internal_pitch_deg");
+                internal_pitch = value;
+                NotifyPropertyChanged("internal_pitch");
             }
         }
-        public string Altimeter_indicated_altitude_ft
+        public string Altimeter_altitude
         {
-            get { return altimeter_indicated_altitude_ft; }
+            get { return altimeter_altitude; }
             set
             {
-                altimeter_indicated_altitude_ft = value;
-                NotifyPropertyChanged("altimeter_indicated_altitude_ft");
+                altimeter_altitude = value;
+                NotifyPropertyChanged("altimeter_altitude");
             }
         }
         public string Latitude_deg
@@ -271,11 +293,14 @@ namespace FlightSimulatorApp2
                     }
                     catch (NullReferenceException)
                     {
-                        Errors = Errors + "Server is dissconnected ";
+                        Errors = "--Server is dissconnected--";
                     }
                     catch (IOException)
                     {
-                        Errors = Errors + "Server is down ";
+                        if (this.telnetClient.isConnect())
+                            Errors = Errors + "--Slowness was detected--";
+                        else
+                            Errors = "--Server is down--";
                     }
                     
                 }
@@ -297,14 +322,14 @@ namespace FlightSimulatorApp2
                     }
                     catch (NullReferenceException)
                     {
-                        Errors = Errors + "Server is dissconnected ";
+                        Errors = "--Server is dissconnected--";
                     }
                     catch (IOException)
                     {
                         if (this.telnetClient.isConnect())
-                            Errors = Errors + "Slowness was detected ";
+                            Errors = Errors + "--Slowness was detected--";
                         else
-                            Errors = Errors + "Server is down ";
+                            Errors = "--Server is down--";
                     }
                     
                 }
@@ -326,14 +351,14 @@ namespace FlightSimulatorApp2
                     }
                     catch (NullReferenceException)
                     {
-                        Errors = Errors + "Server is dissconnected ";
+                        Errors = "--Server is dissconnected--";
                     }
                     catch (IOException)
                     {
                         if (this.telnetClient.isConnect())
                             Errors = Errors + "Slowness was detected ";
                         else
-                            Errors = Errors + "Server is down ";
+                            Errors = "--Server is down--";
                     }
                 }
             }
@@ -354,14 +379,14 @@ namespace FlightSimulatorApp2
                     }
                     catch (NullReferenceException)
                     {
-                        Errors = Errors + "Server is dissconnected ";
+                        Errors = "--Server is dissconnected--";
                     }
                     catch (IOException)
                     {
                         if (this.telnetClient.isConnect())
-                            Errors = Errors + "Slowness was detected ";
+                            Errors = Errors + "--Slowness was detected--";
                         else
-                            Errors = Errors + "Server is down ";
+                            Errors = "--Server is down--";
                     }
                 }
             }
@@ -382,6 +407,15 @@ namespace FlightSimulatorApp2
             {
                 errors = value;
                 NotifyPropertyChanged("errors");
+            }
+        }
+        public string Status
+        {
+            get { return status; }
+            set
+            {
+                status = value;
+                NotifyPropertyChanged("status");
             }
         }
     }

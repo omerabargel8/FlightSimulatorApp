@@ -6,12 +6,12 @@
              xmlns:Controls ="clr-namespace:FlightSimulatorApp2.controls"
              mc:Ignorable="d" 
              d:DesignHeight="350" d:DesignWidth="400" Background="White">
-    <Grid Margin="-9,3,-4,0">
+    <Grid Margin="-2,-2,-98,0" Background="#F5F5F5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Controls:Joystick  Grid.Column="0"  Margin="13,0,5,19" x:Name="joystick" Grid.ColumnSpan="2" Height="328" VerticalAlignment="Bottom" xPos="{Binding Path=VM_xPos, Mode=OneWayToSource}" yPos="{Binding Path=VM_yPos, Mode=OneWayToSource}"></Controls:Joystick>
+        <Controls:Joystick  Grid.Column="0"  Margin="15,0,97,14" x:Name="joystick" Grid.ColumnSpan="2" Height="328" VerticalAlignment="Bottom" xPos="{Binding Path=VM_xPos, Mode=OneWayToSource}" yPos="{Binding Path=VM_yPos, Mode=OneWayToSource}" Foreground="Black" Background="WhiteSmoke"/>
         <Slider x:Name="throttleSlider" HorizontalAlignment="Left" Height="20" Margin="97,317,0,0" VerticalAlignment="Top" Width="222" Background="#FF3A3737" Grid.ColumnSpan="2" Maximum="1" Minimum="-1" Value="{Binding VM_aileron, Mode=OneWayToSource}"/>
         <Slider  x:Name="aileronSlider"   HorizontalAlignment="Left" Margin="45,61,0,0" VerticalAlignment="Top" Height="186" Width="20" Orientation="Vertical" RenderTransformOrigin="0.5,0.004" Background="#FF3A3737" Grid.ColumnSpan="2" Maximum="1" Minimum="0" Value="{Binding VM_throttle, Mode=OneWayToSource}">
             <Slider.RenderTransform>
@@ -24,7 +24,7 @@
             </Slider.RenderTransform>
         </Slider>
         <Label Content="Rudder:" HorizontalAlignment="Left" Height="36" Margin="200,6,0,0" VerticalAlignment="Top" Width="94" FontSize="22" FontWeight="Bold" FontFamily="Sylfaen" Grid.ColumnSpan="2" RenderTransformOrigin="0.023,0.92"/>
-        <Label Content="Elevator:" HorizontalAlignment="Left" Margin="19,5,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="94" FontSize="22" FontWeight="Bold" FontFamily="Sylfaen" Grid.ColumnSpan="2">
+        <Label Content="Elevator:" HorizontalAlignment="Left" Margin="19,5,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="94" FontSize="22" FontWeight="Bold" FontFamily="Sylfaen" Grid.ColumnSpan="2" Height="39">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -45,7 +45,7 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Label Grid.ColumnSpan="2" Content="{Binding ElementName=joystick, Path=xPos, Mode=OneWay}" Height="36" Margin="295,7,119,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" RenderTransformOrigin="0.17,0.556">
+        <Label Grid.ColumnSpan="2" Content="{Binding ElementName=joystick, Path=xPos, Mode=OneWay}" Height="34" Margin="285,10,142,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" RenderTransformOrigin="0.17,0.556">
             <Label.Background>
                 <ImageBrush ImageSource="rudderAilronButton.png"/>
             </Label.Background>
@@ -55,7 +55,16 @@
                 <ImageBrush ImageSource="rudderAilronButton.png"/>
             </Label.Background>
         </Label>
-        <Label Grid.ColumnSpan="2" Content="{Binding ElementName=throttleSlider, Path=Value}" HorizontalAlignment="Left" Height="23" Margin="345,317,0,0" VerticalAlignment="Top" Width="48"/>
-        <Label Grid.ColumnSpan="2" Content="{Binding ElementName=aileronSlider, Path=Value}" HorizontalAlignment="Left" Height="23" Margin="24,279,0,0" VerticalAlignment="Top" Width="48"/>
+        <Label Grid.ColumnSpan="2" Content="{Binding ElementName=throttleSlider, Path=Value}" HorizontalAlignment="Left" Height="23" Margin="328,315,0,0" VerticalAlignment="Top" Width="56" RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.072"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label Grid.ColumnSpan="2" Content="{Binding ElementName=aileronSlider, Path=Value}" HorizontalAlignment="Left" Height="23" Margin="23,264,0,0" VerticalAlignment="Top" Width="56"/>
     </Grid>
 </UserControl>

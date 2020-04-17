@@ -22,14 +22,15 @@ namespace FlightSimulatorApp2.controls
     public partial class connect : UserControl
     {
         private IAppModel model;
-        private System.Configuration.Configuration config;
         public connect()
         {
             InitializeComponent();
+            //gets the model from app
             this.model = (Application.Current as App).Model;
         }
         private void connectButton_Click(object sender, RoutedEventArgs e)
         {
+            //takes ip and port from app.config file
             int port = Int32.Parse(ConfigurationManager.AppSettings["port"].ToString());
             string ip = ConfigurationManager.AppSettings["ip"].ToString();
             model.connect(ip, port);
@@ -43,6 +44,7 @@ namespace FlightSimulatorApp2.controls
         {
             if (ipTextBox.Text != "127.0.0.1")
             {
+                //change the ip in app.config file
                 ConfigurationManager.AppSettings.Set("ip", ipTextBox.Text);
                 ConfigurationManager.RefreshSection("ip");
             }
@@ -52,6 +54,7 @@ namespace FlightSimulatorApp2.controls
         {
             if (portTextBox.Text != "5402")
             {
+                //change the ip in app.config file
                 ConfigurationManager.AppSettings.Set("port", portTextBox.Text);
                 ConfigurationManager.RefreshSection("port");
             }
