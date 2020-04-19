@@ -54,10 +54,12 @@ namespace FlightSimulatorApp2
             {
                 this.telnetClient.connect(ip, port);
                 Status = "Connected";
+                Errors = "";
             } 
             catch
             {
                 Errors = "--Unable to connect to server--";
+                throw new Exception();
             }
         }
         //disconnect from server using telnetClient

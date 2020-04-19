@@ -24,7 +24,7 @@ namespace FlightSimulatorApp2
                 Console.WriteLine("Connection established");
             } catch (SocketException e)
             {
-                Console.WriteLine("ERROR: {0}", e);
+                throw new Exception();
             }
         }
         //send to server the command received

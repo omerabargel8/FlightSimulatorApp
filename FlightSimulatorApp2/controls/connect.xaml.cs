@@ -30,11 +30,20 @@ namespace FlightSimulatorApp2.controls
         }
         private void connectButton_Click(object sender, RoutedEventArgs e)
         {
+            int check = 0;
             //takes ip and port from app.config file
             int port = Int32.Parse(ConfigurationManager.AppSettings["port"].ToString());
             string ip = ConfigurationManager.AppSettings["ip"].ToString();
-            model.connect(ip, port);
-            model.start();
+            try
+            {
+                model.connect(ip, port);
+            }
+            catch (Exception)
+            {
+                check = 1;
+            }
+            if (check == 0)
+                model.start();
         }
         private void disconnectButton_Click(object sender, RoutedEventArgs e)
         {

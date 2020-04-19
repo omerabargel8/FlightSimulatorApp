@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -20,25 +21,29 @@ namespace FlightSimulatorApp2.controls
     /// </summary>
     public partial class Joystick : UserControl
     {
+
         private Point firstPoint = new Point();
+        public Storyboard KnobCen;
         public static readonly DependencyProperty xPosProperty =
            DependencyProperty.Register("xPos", typeof(double), typeof(Joystick));
+
         public Joystick()
         {
             InitializeComponent();
+            KnobCen = Knob.Resources["CenterKnob"] as Storyboard;
         }
         //properties
         public double xPos
         {
-            get {return (double)GetValue(xPosProperty);}
-            set {SetValue(xPosProperty, value); }
+            get { return (double)GetValue(xPosProperty); }
+            set { SetValue(xPosProperty, value); }
         }
         public static readonly DependencyProperty yPosProperty =
            DependencyProperty.Register("yPos", typeof(double), typeof(Joystick));
         public double yPos
         {
-            get {return (double)GetValue(yPosProperty);}
-            set {SetValue(yPosProperty, value); }
+            get { return (double)GetValue(yPosProperty); }
+            set { SetValue(yPosProperty, value); }
         }
         private void centerKnob_Completed(object sender, EventArgs e) { }
 
@@ -47,6 +52,8 @@ namespace FlightSimulatorApp2.controls
             if (e.ChangedButton == MouseButton.Left)
             {
                 firstPoint = e.GetPosition(this);
+                Knob.CaptureMouse();
+                KnobCen.Stop();
             }
         }
 
@@ -57,7 +64,7 @@ namespace FlightSimulatorApp2.controls
             {
                 double x = e.GetPosition(this).X - firstPoint.X;
                 double y = e.GetPosition(this).Y - firstPoint.Y;
-                if (Math.Sqrt(x*x + y*y) <= Base.Width / 2)
+                if (Math.Sqrt(x * x + y * y) <= Base.Width / 2)
                 {
                     knobPosition.X = x;
                     knobPosition.Y = y;
@@ -70,18 +77,23 @@ namespace FlightSimulatorApp2.controls
         //returns the knob to center when release the mouse
         private void Knob_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            knobPosition.X = 0;
-            knobPosition.Y = 0;
+
+            KnobCen.Begin();
+            Knob.ReleaseMouseCapture();
             xPos = 0;
             yPos = 0;
+
         }
 
         private void Knob_MouseLeave(object sender, MouseEventArgs e)
         {
-            knobPosition.X = 0;
-            knobPosition.Y = 0;
+
+            KnobCen.Begin();
             xPos = 0;
             yPos = 0;
+
+            Knob.ReleaseMouseCapture();
+
         }
     }
 
